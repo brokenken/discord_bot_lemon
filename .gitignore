@@ -1,3 +1,5 @@
-TOKEN
-venv
+.env
+venvgit branch
 discord.log
+__pycache__
+.ideagit
