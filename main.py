@@ -24,13 +24,12 @@ class MainBot(commands.Cog):
         if isinstance(error, commands.CommandNotFound):
             await ctx.send('Invalid Command!')
         elif isinstance(error, commands.MissingPermissions):
-         await ctx.send('Bot Permission Missing!')
+            await ctx.send('Bot Permission Missing!')
 
 
 intents = discord.Intents.default()
 intents.members = True
 intents.presences = True
-
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(settings['prefix']),
                    description='Some useless bot.', intents=intents)
