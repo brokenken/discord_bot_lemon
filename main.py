@@ -35,7 +35,7 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or(settings['prefix'])
                    description='Some useless bot.', intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
 
-# logger
+# logger kek
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
