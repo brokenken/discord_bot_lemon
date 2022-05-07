@@ -1,5 +1,5 @@
-.env
-venvgit branch
-discord.log
-__pycache__
-.ideagit
+idea/
+__pycache__/
+venv/
+*.log
+*.envgit
