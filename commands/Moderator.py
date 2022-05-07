@@ -97,7 +97,7 @@ class Moderator(commands.Cog):
     )
     @commands.command()
     async def cmute(self, ctx, member, time, reason=None):
-        if not self.check_moder(member):
+        if not self.check_moder(ctx.author):
             return
         a = str()
         b = str()
@@ -137,7 +137,7 @@ class Moderator(commands.Cog):
     )
     @commands.command()
     async def uncmute(self, ctx, member):
-        if not self.check_moder(member):
+        if not self.check_moder(ctx.author):
             return
         role = discord.utils.get(ctx.guild.roles, id=settings['chat_mute_role_id'])
         await member.remove_roles(role)
@@ -160,7 +160,7 @@ class Moderator(commands.Cog):
     )
     @commands.command()
     async def vmute(self, ctx, member, time, reason=None):
-        if not self.check_moder(member):
+        if not self.check_moder(ctx.author):
             return
         a = str()
         b = str()
@@ -200,7 +200,7 @@ class Moderator(commands.Cog):
     )
     @commands.command()
     async def unvmute(self, ctx, member):
-        if not self.check_moder(member):
+        if not self.check_moder(ctx.author):
             return
         role = discord.utils.get(ctx.guild.roles, id=settings['voice_mute_role_id'])
         await member.remove_roles(role)
@@ -209,6 +209,54 @@ class Moderator(commands.Cog):
         embed = discord.Embed(title="Logs - unvmute", color=0x04ff00)
         embed.set_thumbnail(url=member.avatar_url)
         embed.add_field(name="Voice unmute", value="<@{}> removed voice mute from <@{}>".format(ctx.author.id, member.id), inline=False)
+        await channel.send(embed=embed)
+
+    @cog_ext.cog_slash(
+        name='ban',
+        description='ban user',
+        options=[
+            create_option(name="member", description="user tag or id", option_type=6, required=True),
+            create_option(name="reason", description="reason of ban", option_type=3, required=False)
+        ],
+        guild_ids=settings['guild_ids']
+    )
+    @commands.command()
+    async def ban(self, ctx, member, reason=None):
+        if not self.check_moder(ctx.author):
+            return
+        if reason is None:
+            reason = "No reason"
+
+        await member.ban(reason=reason)
+        await ctx.send('<@{}> banned'.format(member.id))
+        channel = self.bot.get_channel(settings['channel_logs_id'])
+        embed = discord.Embed(title="Logs - ban", description="<@{}> gave ban to <@{}>\n  **Reason:** `{}`".format(ctx.author.id, member.id, reason), color=0x000000)
+        embed.set_thumbnail(url=member.avatar_url)
+        embed.add_field(name="Moderator", value="<@{}>".format(ctx.author.id, inline=True))
+        embed.add_field(name="Intruder", value="<@{}>".format(member.id, inline=True))
+        await channel.send(embed=embed)
+
+    @cog_ext.cog_slash(
+        name='unban',
+        description='unban user',
+        options=[
+            create_option(name="member", description="user tag or id", option_type=6, required=True)
+        ],
+        guild_ids=settings['guild_ids']
+    )
+    @commands.command()
+    async def unban(self, ctx, member):
+        if not self.check_moder(ctx.author):
+            return
+        banned_users = await ctx.guild.bans()
+        for banned in banned_users:
+            if banned.user.id == member:
+                await ctx.guild.unban(banned.user)
+                break
+        await ctx.send('<@{}> unbanned'.format(member))
+        channel = self.bot.get_channel(settings['channel_logs_id'])
+        embed = discord.Embed(title="Logs - unban", color=0x04ff00)
+        embed.add_field(name="Unban", value="<@{}> removed ban from <@{}>".format(ctx.author.id, member), inline=False)
         await channel.send(embed=embed)
 
 
