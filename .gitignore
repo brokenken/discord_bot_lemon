@@ -1,5 +1,5 @@
-.idea/
+.gidea/
 __pycache__/
 venv/
 *.log
-TOKEN
+*.env
