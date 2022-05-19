@@ -7,7 +7,7 @@ from discord.ext import tasks
 import json
 
 
-class Background_tasks(commands.Cog):
+class Background_tasks(commands.Cog):#андерграунд
     def __init__(self, bot):
         self.bot = bot
         self.check_users.start()
