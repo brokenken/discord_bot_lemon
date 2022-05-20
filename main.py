@@ -22,9 +22,11 @@ class MainBot(commands.Cog):
         embed = discord.Embed(color=0x7af0d9)
         emoji = '<a:point123123:976908399272935514>'
         embed.description = '```Базовые команды```\n' \
+                            ' {} `/profile @user` - Профиль пользователя\n' \
+                            ' {} `/slot count` - Поставь count в казино\n' \
                             ' {} `/avatar @user` - Аватар пользователя\n\n' \
                             '```Команды модерации```\n' \
-                            ' {} `/clear cnt` - Удалить cnt сообщений\n' \
+                            ' {} `/clear count` - Удалить count сообщений\n' \
                             ' {} `/clearfromuser @user` Удалить все сообщения от пользователя\n' \
                             ' {} `/cmute @user time reason` - Выдать чат мут пользователю\n' \
                             ' {} `/uncmute @user` - Снять чат мут пользователю\n' \
@@ -38,7 +40,7 @@ class MainBot(commands.Cog):
                             ' {} `/stroke @user` - Погладить пользователя\n' \
                             ' {} `/cry @user` - Заплакать из-за пользователя\n' \
                             ' {} `/punch @user` - Ударить пользователя\n' \
-                            ' {} `/angry @user` - Разозлиться на пользователя'.format(emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji)
+                            ' {} `/angry @user` - Разозлиться на пользователя'.format(emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji)
         await channel.send(embed=embed)
 
     @commands.Cog.listener()
