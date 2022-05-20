@@ -5,6 +5,7 @@ from discord_slash.utils.manage_commands import create_option
 from config import settings
 import json
 from random import randint
+import asyncio
 
 
 class Entertainment(commands.Cog):
@@ -21,7 +22,7 @@ class Entertainment(commands.Cog):
     )
     @commands.command()
     async def avatar(self, ctx, member):
-        embed = discord.Embed(title="Аватар", description='Аватар пользователя <@{}>'.format(member.id), color=0x752386)
+        embed = discord.Embed(title="Аватар", description='Аватар пользователя <@{}>'.format(member.id), color=0x7af0d9)
         embed.set_author(name='{}'.format(ctx.author), icon_url=ctx.author.avatar_url)
         embed.set_image(url=member.avatar_url)
         await ctx.send(embed=embed)
@@ -35,7 +36,7 @@ class Entertainment(commands.Cog):
         guild_ids=settings['guild_ids']
     )
     @commands.command()
-    async def avatar(self, ctx, member=None):
+    async def profile(self, ctx, member=None):
         if member is None:
             member = ctx.author
         with open('.\\databases\\user_data.json', 'r') as file:
@@ -45,7 +46,7 @@ class Entertainment(commands.Cog):
         for user in user_data:
             if user == new_user:
                 cnt = user_data[new_user][0]
-        embed = discord.Embed(tittle='Профиль', description='Профиль <@{}>'.format(member.id), color=0xec186d)
+        embed = discord.Embed(tittle='Профиль', description='Профиль <@{}>'.format(member.id), color=0x7af0d9)
         h = (cnt // 60) // 60
         m = cnt // 60
         s = cnt - (h * 60 * 60 + m * 60)
@@ -76,20 +77,50 @@ class Entertainment(commands.Cog):
             user_data = json.load(file)
             new_user = str(member.id)
         if count > user_data[new_user][2]:
-            await ctx.send("Мало на счёте")
+            embed = discord.Embed(title="```Недостаточно средств```", color=0xd71414)
+            embed.set_thumbnail(url='https://media.giphy.com/media/ZGH8VtTZMmnwzsYYMf/giphy.gif')
+            await ctx.send(embed=embed)
         else:
+            embed = discord.Embed(title="```Казино```", color=0x7af0d9)
+            embed.set_image(url='https://media.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif')
+            msg = await ctx.send(embed=embed)
             user_data[new_user][2] -= count
-            x = randint(1, 100)
-            if x >= 90:
-                user_data[new_user][2] += count * 2
-                await ctx.send("Победа!")
-            else:
-                await ctx.send("Казино....")
             with open('.\\databases\\user_data.json', 'w') as update_user_data:
                 json.dump(user_data, update_user_data, indent=4)
+            await asyncio.sleep(2)
 
+            def checkmsg(message):
+                return message.id == msg.id
 
-
+            await ctx.channel.purge(check=checkmsg)
+            x = randint(1, 100)
+            if x == 100:
+                user_data[new_user][2] += count * 10
+                embed = discord.Embed(title="WINNER WINNER CHIKEN DINNER!!!", color=0x06cb13)
+                embed.set_thumbnail(url='https://media.giphy.com/media/PhdC5X5qr6mzK/giphy.gif')
+                embed.description = "Выпало {}, <@{}> получает {} :coin:, поздравим!!!".format(x, ctx.author.id, count * 10)
+                await ctx.send(embed=embed)
+            else:
+                if x >= 95:
+                    user_data[new_user][2] += count * 5
+                    embed = discord.Embed(title="Win x5", color=0xe4e70d)
+                    embed.set_thumbnail(url='https://media.giphy.com/media/Yl9bVWbTSOR1947QEn/giphy.gif')
+                    embed.description = "Выпало {}, <@{}> получает {} :coin:, поздравим!!!".format(x, ctx.author.id, count * 5)
+                    await ctx.send(embed=embed)
+                else:
+                    if x > 80:
+                        user_data[new_user][2] += count * 2
+                        embed = discord.Embed(title="Win x2", color=0x294fc2)
+                        embed.set_thumbnail(url='https://media.giphy.com/media/1DEJwfwdknKZq/giphy.gif')
+                        embed.description = "Выпало {}, <@{}> получает {} :coin:, поздравим!!!".format(x, ctx.author.id,  count * 2)
+                        await ctx.send(embed=embed)
+                    else:
+                        embed = discord.Embed(title="Казино...", color=0xd81818)
+                        embed.set_thumbnail(url='https://media.giphy.com/media/26uf9REqpyY10QBd6/giphy.gif')
+                        embed.description = "Выпало {}, <@{}> проиграл {} :coin:, жаль..".format(x, ctx.author.id,  count)
+                        await ctx.send(embed=embed)
+            with open('.\\databases\\user_data.json', 'w') as update_user_data:
+                json.dump(user_data, update_user_data, indent=4)
 
 
 def setup(bot):
