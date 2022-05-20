@@ -23,7 +23,8 @@ class MainBot(commands.Cog):
         emoji = '<a:point123123:976908399272935514>'
         embed.description = '```Базовые команды```\n' \
                             ' {} `/profile @user` - Профиль пользователя\n' \
-                            ' {} `/slot count` - Поставь count в казино\n' \
+                            ' {} `/slot count` - Поставь count :coin: в казино\n' \
+                            ' {} `/transfer @user count` - Передать пользователю count :coin:\n' \
                             ' {} `/avatar @user` - Аватар пользователя\n\n' \
                             '```Команды модерации```\n' \
                             ' {} `/clear count` - Удалить count сообщений\n' \
@@ -40,7 +41,7 @@ class MainBot(commands.Cog):
                             ' {} `/stroke @user` - Погладить пользователя\n' \
                             ' {} `/cry @user` - Заплакать из-за пользователя\n' \
                             ' {} `/punch @user` - Ударить пользователя\n' \
-                            ' {} `/angry @user` - Разозлиться на пользователя'.format(emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji)
+                            ' {} `/angry @user` - Разозлиться на пользователя'.format(emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji)
         await channel.send(embed=embed)
 
     @commands.Cog.listener()

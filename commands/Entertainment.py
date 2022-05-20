@@ -12,6 +12,36 @@ class Entertainment(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def conv_sm(self, n):
+        es = ['а', 'ы', '']
+        n = n % 100
+        if n >= 11 and n <= 19:
+            s = es[2]
+        else:
+            i = n % 10
+            if i == 1:
+                s = es[0]
+            elif i in [2, 3, 4]:
+                s = es[1]
+            else:
+                s = es[2]
+        return s
+
+    def conv_h(self, n):
+        es = ['', 'а', 'ов']
+        n = n % 100
+        if n >= 11 and n <= 19:
+            s = es[2]
+        else:
+            i = n % 10
+            if i == 1:
+                s = es[0]
+            elif i in [2, 3, 4]:
+                s = es[1]
+            else:
+                s = es[2]
+        return s
+
     @cog_ext.cog_slash(
         name='avatar',
         description='shows user avatar',
@@ -52,11 +82,11 @@ class Entertainment(commands.Cog):
         s = cnt - (h * 60 * 60 + m * 60)
         if h == 0:
             if m == 0:
-                embed.add_field(name='Время в войсе', value='`{} секунд`'.format(s), inline=False)
+                embed.add_field(name='Время в войсе', value='`{} секунд{}`'.format(s, self.conv_sm(s)), inline=False)
             else:
-                embed.add_field(name='Время в войсе', value='`{} минут {} секунд`'.format(m, s), inline=False)
+                embed.add_field(name='Время в войсе', value='`{} минут{} {} секунд{}`'.format(m, self.conv_sm(m), s, self.conv_sm(s)), inline=False)
         else:
-            embed.add_field(name='Время в войсе', value='`{} часов {} минут {} секунд'.format(h, m, s), inline=False)
+            embed.add_field(name='Время в войсе', value='`{} час{} {} минут{} {} секунд{}'.format(h, self.conv_h(h), m, self.conv_sm(m), s, self.conv_sm(s)), inline=False)
         embed.add_field(name='Количество сообщений', value='`{} сообщений`'.format(user_data[new_user][1]), inline=False)
         embed.add_field(name='Баланс', value='`{}` :coin:'.format(user_data[new_user][2]), inline=False)
         embed.set_thumbnail(url=member.avatar_url)
@@ -121,6 +151,35 @@ class Entertainment(commands.Cog):
                         await ctx.send(embed=embed)
             with open('.\\databases\\user_data.json', 'w') as update_user_data:
                 json.dump(user_data, update_user_data, indent=4)
+
+    @cog_ext.cog_slash(
+        name='transfer',
+        description='give money to someone',
+        options=[
+            create_option(name="user", description="who?", required=True, option_type=6),
+            create_option(name="count", description="how many?", required=True, option_type=4)
+        ],
+        guild_ids=settings['guild_ids']
+    )
+    @commands.command()
+    async def transfer(self, ctx, user, count):
+        member = ctx.author
+        with open('.\\databases\\user_data.json', 'r') as file:
+            user_data = json.load(file)
+            new_user = str(member.id)
+        if count > user_data[new_user][2]:
+            embed = discord.Embed(title="```Недостаточно средств```", color=0xd71414)
+            embed.set_thumbnail(url='https://media.giphy.com/media/ZGH8VtTZMmnwzsYYMf/giphy.gif')
+            await ctx.send(embed=embed)
+            return
+        user_data[new_user][2] -= count
+        user_data[str(user.id)][2] += count
+        with open('.\\databases\\user_data.json', 'w') as update_user_data:
+            json.dump(user_data, update_user_data, indent=4)
+        embed = discord.Embed(title="```Передача денег```", color=0x7af0d9)
+        embed.description = "<@{}> передал <@{}> {} :coin:".format(member.id, user.id, count)
+        embed.set_image(url='https://media.giphy.com/media/dZdadd8KqjgsJGjMVp/giphy.gif')
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

@@ -1,13 +1,10 @@
-import discord
 from discord.ext import commands
-from discord_slash import cog_ext
-from discord_slash.utils.manage_commands import create_option
 from config import settings
 from discord.ext import tasks
 import json
 
 
-class Background_tasks(commands.Cog):#андерграунд
+class Background_tasks(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.check_users.start()

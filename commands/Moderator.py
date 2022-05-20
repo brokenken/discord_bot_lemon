@@ -45,7 +45,7 @@ class Moderator(commands.Cog):
         name='clearfromuser',
         description='delete all messages from user',
         options=[
-            create_option(name="user", description="select user", required=True, option_type=9)
+            create_option(name="user", description="select user", required=True, option_type=6)
         ],
         guild_ids=settings['guild_ids']
     )
