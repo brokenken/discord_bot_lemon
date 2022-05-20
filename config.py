@@ -1,10 +1,16 @@
 settings = {
     'prefix': '!',
-    'guild_ids': [961360073983144016],
+    'guild_ids': [961360073983144016, 392248720097411082],
+
     'chat_mute_role_id': 971487061624377366,
     'voice_mute_role_id': 972266735833063455,
+    'moderation_role': [972572343673163827, 974369633169715220, 974369698898645022],
+
     'channel_logs_id': 972249452205199400,
-    'moderation_role': [972572343673163827]
+    'channel_info_id': 976900492196196423,
+
+    'time': 1,
+    'money': 1
 }
 
 gif = {
@@ -27,5 +33,34 @@ gif = {
     'stroke_gifs': [
         'https://images-ext-2.discordapp.net/external/mKEJp5mhmL0W32T8RJB1809sX-QR_8WXfMj7Rwag3pY/%3Fw%3D340%26h%3D254/https/kinogud.files.wordpress.com/2019/08/giphy-1.gif',
         'https://images-ext-1.discordapp.net/external/MsO-616etMaja5YchalDhz6d2Gl9O4KjcVjEeXlAgJQ/https/i.gifer.com/origin/31/31838530c87e57e7cb4c5491823b75b8_w200.gif',
-        'https://images-ext-1.discordapp.net/external/F52tK8FUm87TufjelHUebkbhY8AH_s-wg5rYOTZQilU/https/animegif.ru/up/photos/album/nov17/171120_3202.gif']
+        'https://images-ext-1.discordapp.net/external/F52tK8FUm87TufjelHUebkbhY8AH_s-wg5rYOTZQilU/https/animegif.ru/up/photos/album/nov17/171120_3202.gif'],
+    'crying_gifs': [
+        'https://media.giphy.com/media/qscdhWs5o3yb6/giphy.gif',
+        'https://media.giphy.com/media/shVJpcnY5MZVK/giphy.gif',
+        'https://media.giphy.com/media/cUl8fuIG75QWs/giphy.gif',
+        'https://media.giphy.com/media/59d1zo8SUSaUU/giphy.gif',
+        'https://media.giphy.com/media/Ui7MfO6OaLz4k/giphy.gif',
+        'https://media.giphy.com/media/yarJ7WfdKiAkE/giphy.gif',
+        'https://media.giphy.com/media/vgiMKWorl62o2czqBe/giphy.gif',
+        'https://media.giphy.com/media/Pok6284jGzyGA/giphy.gif'],
+    'punch_gifs': [
+        'https://media.giphy.com/media/cb4Pg4jau2SEE/giphy.gif',
+        'https://media.giphy.com/media/xKzCxk6p9wxLG/giphy.gif',
+        'https://media.giphy.com/media/rl5FEIQ15m57r5PkOA/giphy.gif',
+        'https://media.giphy.com/media/u2LJ0n4lx6jF6/giphy.gif',
+        'https://media.giphy.com/media/11HeubLHnQJSAU/giphy.gif',
+        'https://media.giphy.com/media/VDZDQWaCR2YhQ0qeUo/giphy.gif',
+        'https://media.giphy.com/media/Z5zuypybI5dYc/giphy.gif',
+        'https://media.giphy.com/media/S8nGEQ0yR8z6M/giphy.gif'
+    ],
+    'angry_gifs': [
+        'https://media.giphy.com/media/U77FFxuyoIPvHEIgkq/giphy.gif',
+        'https://media.giphy.com/media/X3VrxPijowGC4/giphy.gif',
+        'https://media.giphy.com/media/9w9Z2ZOxcbs1a/giphy.gif',
+        'https://media.giphy.com/media/hFVI29iuk2wFy/giphy.gif',
+        'https://media.giphy.com/media/uXsPodwDXnitq/giphy.gif',
+        'https://media.giphy.com/media/11raneDZtruZlm/giphy.gif',
+        'https://media.giphy.com/media/FAI5TtHYYEges/giphy.gif',
+        'https://media.giphy.com/media/nnIfvLqA2SbuGr3VAL/giphy.gif'
+    ]
 }
