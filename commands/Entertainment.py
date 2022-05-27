@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext
 from discord_slash.utils.manage_commands import create_option
-from config import settings
+from config import settings, gif
 import json
 from random import randint
 import asyncio
@@ -15,7 +15,7 @@ class Entertainment(commands.Cog):
     def conv_sm(self, n):
         es = ['а', 'ы', '']
         n = n % 100
-        if n >= 11 and n <= 19:
+        if 11 <= n <= 19:
             s = es[2]
         else:
             i = n % 10
@@ -30,7 +30,7 @@ class Entertainment(commands.Cog):
     def conv_h(self, n):
         es = ['', 'а', 'ов']
         n = n % 100
-        if n >= 11 and n <= 19:
+        if 11 <= n <= 19:
             s = es[2]
         else:
             i = n % 10
@@ -77,16 +77,18 @@ class Entertainment(commands.Cog):
             if user == new_user:
                 cnt = user_data[new_user][0]
         embed = discord.Embed(tittle='Профиль', description='Профиль <@{}>'.format(member.id), color=0x7af0d9)
-        h = (cnt // 60) // 60
-        m = cnt // 60
-        s = cnt - (h * 60 * 60 + m * 60)
+        s = (cnt % 60)
+        cnt = cnt // 60
+        m = (cnt % 60)
+        cnt = cnt // 60
+        h = (cnt % 60)
         if h == 0:
             if m == 0:
                 embed.add_field(name='Время в войсе', value='`{} секунд{}`'.format(s, self.conv_sm(s)), inline=False)
             else:
                 embed.add_field(name='Время в войсе', value='`{} минут{} {} секунд{}`'.format(m, self.conv_sm(m), s, self.conv_sm(s)), inline=False)
         else:
-            embed.add_field(name='Время в войсе', value='`{} час{} {} минут{} {} секунд{}'.format(h, self.conv_h(h), m, self.conv_sm(m), s, self.conv_sm(s)), inline=False)
+            embed.add_field(name='Время в войсе', value='`{} час{} {} минут{} {} секунд{}`'.format(h, self.conv_h(h), m, self.conv_sm(m), s, self.conv_sm(s)), inline=False)
         embed.add_field(name='Количество сообщений', value='`{} сообщений`'.format(user_data[new_user][1]), inline=False)
         embed.add_field(name='Баланс', value='`{}` :coin:'.format(user_data[new_user][2]), inline=False)
         embed.set_thumbnail(url=member.avatar_url)
@@ -102,6 +104,10 @@ class Entertainment(commands.Cog):
     )
     @commands.command()
     async def slot(self, ctx, count):
+        if count <= 0:
+            embed = discord.Embed(title="```Ставка должна быть больше 0```", color=0xd71414)
+            await ctx.send(embed=embed)
+            return
         member = ctx.author
         with open('.\\databases\\user_data.json', 'r') as file:
             user_data = json.load(file)
@@ -163,6 +169,10 @@ class Entertainment(commands.Cog):
     )
     @commands.command()
     async def transfer(self, ctx, user, count):
+        if count <= 0:
+            embed = discord.Embed(title="```Сумма перевода должна быть больше 0```", color=0xd71414)
+            await ctx.send(embed=embed)
+            return
         member = ctx.author
         with open('.\\databases\\user_data.json', 'r') as file:
             user_data = json.load(file)

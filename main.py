@@ -18,7 +18,7 @@ class MainBot(commands.Cog):
         await channel.purge()
         embed = discord.Embed(color=0x7af0d9)
         embed.set_image(url='https://images-ext-1.discordapp.net/external/Bs7Mv7xWa6vCOMYtKPk3MI29dwXtgikWFi4vlBwgEsY/%3Fwidth%3D1023%26height%3D402/https/media.discordapp.net/attachments/935817163082719273/958360399256899604/Picsart_22-03-29_03-21-55-933.png')
-        await channel.send(embed=embed)
+        #await channel.send(embed=embed)
         embed = discord.Embed(color=0x7af0d9)
         emoji = '<a:point123123:976908399272935514>'
         embed.description = '```Базовые команды```\n' \
@@ -28,7 +28,7 @@ class MainBot(commands.Cog):
                             ' {} `/avatar @user` - Аватар пользователя\n\n' \
                             '```Команды модерации```\n' \
                             ' {} `/clear count` - Удалить count сообщений\n' \
-                            ' {} `/clearfromuser @user` Удалить все сообщения от пользователя\n' \
+                            ' {} `/uclear @user` - Удалить все сообщения от пользователя\n' \
                             ' {} `/cmute @user time reason` - Выдать чат мут пользователю\n' \
                             ' {} `/uncmute @user` - Снять чат мут пользователю\n' \
                             ' {} `/vmute @user time reason` - Выдать войс мут пользователю\n' \
@@ -42,7 +42,7 @@ class MainBot(commands.Cog):
                             ' {} `/cry @user` - Заплакать из-за пользователя\n' \
                             ' {} `/punch @user` - Ударить пользователя\n' \
                             ' {} `/angry @user` - Разозлиться на пользователя'.format(emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji, emoji)
-        await channel.send(embed=embed)
+        #await channel.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_resumed(self):

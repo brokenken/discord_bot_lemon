@@ -42,7 +42,7 @@ class Moderator(commands.Cog):
         await ctx.channel.purge(limit=1)
 
     @cog_ext.cog_slash(
-        name='clearfromuser',
+        name='uclear',
         description='delete all messages from user',
         options=[
             create_option(name="user", description="select user", required=True, option_type=6)
@@ -50,7 +50,7 @@ class Moderator(commands.Cog):
         guild_ids=settings['guild_ids']
     )
     @commands.command()
-    async def clearfromuser(self, ctx, user):
+    async def uclear(self, ctx, user):
         if not self.check_moder(ctx.author):
             embed = discord.Embed(title="Для этой команды вам нужна одна из этих ролей:")
             embed.description = ""
@@ -60,7 +60,7 @@ class Moderator(commands.Cog):
             return
 
         def checkUser(message):
-            return message.author.id == int(user)
+            return message.author == user
 
         deleted = await ctx.channel.purge(check=checkUser)
         await ctx.send('Удалено {} сообщений от <@{}>'.format(len(deleted), user.id))
@@ -201,6 +201,7 @@ class Moderator(commands.Cog):
             a *= 60 * 60
         if b == 'd':
             a *= 60 * 60 * 60
+        await member.move_to(None)
         await asyncio.sleep(a)
         await self.auto_unvmute(ctx, member)
 
